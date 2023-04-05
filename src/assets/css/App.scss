@@ -1,0 +1,81 @@
+.App {
+  height: 100vh;
+  background: url('../images/weather-live-wallpaper-xl.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.main {
+  padding-top: 90px;
+}
+
+.ant-card {
+  background: rgba(255, 255, 255, 0.6);
+
+  .ant-card-body {
+    width: 100%;
+  }
+}
+
+.divider {
+  margin: 12px 0;
+}
+
+.detail-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .list {
+    flex: 1;
+    padding-left: 20px;
+    .item {
+      display: grid;
+      grid-template-columns: 60% 40%;
+    }
+  }
+}
+
+.humidity {
+  .label {
+    position: absolute;
+    bottom: 10px;
+    left: auto;
+    right: auto;
+    width: 120px;
+    text-align: center;
+  }
+}
+
+.wind {
+  .anticon-arrow-right {
+    font-size: 2rem;
+  }
+
+  .speed {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  .label {
+
+  }
+}
+
+.temperature {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+
+  .day-name {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin: 0;
+  }
+  .temp {
+    font-size: 3rem;
+    font-weight: 300;
+    margin: 0;
+  }
+}

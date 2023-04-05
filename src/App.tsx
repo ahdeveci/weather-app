@@ -1,8 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {IPService} from "./services/IPService";
-import {WeatherService} from "./services/WeatherService";
+import {
+    Col,
+    Row,
+} from 'antd';
+
+import './assets/css/App.scss';
+import {IPService} from './services/IPService';
+import {WeatherService} from './services/WeatherService';
+import CurrentSummary from "./components/CurrentSummary";
 
 type Position = {
     latitude: number;
@@ -51,20 +56,11 @@ const App = (): JSX.Element => {
     // TODO: Implement layout
     return (
         <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
+            <Row className="main" justify="space-around">
+                <Col lg={12} xs={23}>
+                    <CurrentSummary weather={weather}/>
+                </Col>
+            </Row>
         </div>
     );
 }
