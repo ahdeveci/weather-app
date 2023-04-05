@@ -1,5 +1,5 @@
 .App {
-  height: 100vh;
+  min-height: 100vh;
   background: url('../images/weather-live-wallpaper-xl.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
@@ -77,5 +77,31 @@
     font-size: 3rem;
     font-weight: 300;
     margin: 0;
+    span {
+      font-size: 2rem;
+      font-weight: 100;
+    }
+  }
+}
+
+.forecasts {
+  margin: 0 10px;
+
+  .temperature {
+    flex-flow: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .App {
+    height: auto;
+    background: url('../images/weather-live-wallpaper-360x720.jpeg');
+    background-repeat: repeat-y;
+    background-size: cover;
+  }
+
+  .forecasts {
+    margin: 10px 5px;
   }
 }

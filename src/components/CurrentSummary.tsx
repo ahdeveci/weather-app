@@ -6,13 +6,14 @@ import {getDayName} from "../utils/Misc";
 
 interface CurrentSummaryProps {
     weather: any;
-};
+    location: any;
+}
 
-const CurrentSummary = ({weather}: CurrentSummaryProps) => {
+const CurrentSummary = ({weather, location}: CurrentSummaryProps) => {
     return (
         <>
             <h1>
-                Right now in {weather?.location?.name}, it's {weather?.current?.condition?.text}
+                Right now in {location?.name}, it's {weather?.condition?.text}
             </h1>
             <Row justify="space-between" gutter={[16, 16]}>
                 <Col lg={11} xs={24}>
@@ -20,16 +21,18 @@ const CurrentSummary = ({weather}: CurrentSummaryProps) => {
                         <div className="temperature">
                             <div>
                                 <div className="day-name">
-                                    {getDayName(weather?.location?.localtime)}
+                                    {getDayName(location?.localtime)}
                                 </div>
-                                <div className="temp">{weather?.current?.temp_c}&nbsp;
-                                    <sup>o</sup>C
+                                <div className="temp">{weather?.temp_c}&nbsp;
+                                    <span>
+                                        <sup>o</sup>C
+                                    </span>
                                 </div>
                             </div>
                             <div>
-                                <img src={weather?.current?.condition?.icon} alt="weather icon" width={70}/>
+                                <img src={weather?.condition?.icon} alt="weather icon" width={70}/>
                                 <div>
-                                    {weather?.current?.condition?.text}
+                                    {weather?.condition?.text}
                                 </div>
                             </div>
 
@@ -41,7 +44,7 @@ const CurrentSummary = ({weather}: CurrentSummaryProps) => {
                     <Card bordered={false} className="temperature">
                         <div className="detail-wrapper">
                             <div className="humidity">
-                                <Progress type="dashboard" percent={weather?.current?.humidity}
+                                <Progress type="dashboard" percent={weather?.humidity}
                                           strokeColor={{'0%': '#108ee9', '100%': '#87d068'}}/>
                                 <div className="label">Humidity</div>
                             </div>
@@ -51,9 +54,9 @@ const CurrentSummary = ({weather}: CurrentSummaryProps) => {
                                         Wind
                                     </div>
                                     <div>
-                                        <ArrowRightOutlined style={{rotate: `${weather?.current?.wind_degree}deg`}}/>
+                                        <ArrowRightOutlined style={{rotate: `${weather?.wind_degree}deg`}}/>
                                         <span className="speed">
-                                                    {weather?.current?.wind_kph} km/h
+                                                    {weather?.wind_kph} km/h
                                                 </span>
                                     </div>
                                 </div>
@@ -63,7 +66,7 @@ const CurrentSummary = ({weather}: CurrentSummaryProps) => {
                                         Wind Gusts
                                     </div>
                                     <div className="speed">
-                                        {weather?.current?.gust_kph} km/h
+                                        {weather?.gust_kph} km/h
                                     </div>
                                 </div>
                                 <Divider className="divider"/>
@@ -72,7 +75,7 @@ const CurrentSummary = ({weather}: CurrentSummaryProps) => {
                                         Pressure
                                     </div>
                                     <div className="speed">
-                                        {weather?.current?.pressure_in} mb
+                                        {weather?.pressure_in} mb
                                     </div>
                                 </div>
                             </div>
