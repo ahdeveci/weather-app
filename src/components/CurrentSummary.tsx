@@ -20,7 +20,7 @@ const CurrentSummary = ({weather, location}: CurrentSummaryProps) => {
                                 <div className="day-name">
                                     {location?.localtime && getDayName(location?.localtime)}
                                 </div>
-                                <div className="temp">{weather?.temp_c || weather?.avgtemp_c}&nbsp;
+                                <div className="temp">{(weather?.temp_c || weather?.avgtemp_c)}&nbsp;
                                     <span>
                                         <sup>o</sup>C
                                     </span>
