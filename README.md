@@ -2,9 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Min. NodeJS version: v16.x
+
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+
+Install all dependecies that project neeeded.
 
 ### `npm start`
 
