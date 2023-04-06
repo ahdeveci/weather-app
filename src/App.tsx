@@ -10,7 +10,9 @@ import {IPService} from './services/IPService';
 import {WeatherService} from './services/WeatherService';
 import CurrentSummary from "./components/CurrentSummary";
 import ForecastItem from "./components/ForecastItem";
+import SearchForm from "./components/SearchForm";
 
+const TIMER_INTERVAL = 5000;
 type Position = {
     latitude: number;
     longitude: number;
@@ -19,6 +21,9 @@ type Position = {
 const App = (): JSX.Element => {
     const [position, setPosition] = useState<Position | null>(null);
     const [weather, setWeather] = useState<any>(null);
+    const [searchedWeather, setSearchedWeather] = useState<any>(null);
+    const [searchedLocation, setSearchedLocation] = useState<any>(null);
+    const [searchedDate, setSearchedDate] = useState<any>(null);
     const [forecasts, setForecasts] = useState<any[]>([]);
     const [location, setLocation] = useState<any>(null);
     const [permission, setPermission] = useState<boolean>(true);
@@ -44,13 +49,14 @@ const App = (): JSX.Element => {
             if (!document.hidden) {
                 getWeatherData();
             }
-        }, 5000);
+        }, TIMER_INTERVAL);
         setIntervalId(id);
     }
 
     const getWeatherData = async () => {
         if (position) {
-            const result = await WeatherService.getWeather(`${position?.latitude},${position?.longitude}`, 'current');
+            const q = `${position?.latitude},${position?.longitude}`;
+            const result = await WeatherService.getWeather(q, 'current');
             if (result?.data) {
                 const {location, current} = result.data;
                 setWeather(current);
@@ -68,6 +74,18 @@ const App = (): JSX.Element => {
         }
         return null;
     }, [position]);
+
+    const getWeatherDataByPlace = async (place: string, date: string) => {
+        const reqType = date === '' ? 'current' : new Date(date) > new Date() ? 'future' : 'history';
+        const dt = date === '' ? '' : `&dt=${date}`;
+        const result = await WeatherService.getWeather(place, reqType, dt);
+        if (result?.data) {
+            const {location, forecast, current} = result.data;
+            setSearchedLocation(location);
+            setSearchedWeather(current || forecast?.forecastday[0]?.day);
+            setSearchedDate(current ? location.localtime : date);
+        }
+    }
 
 
     const getIPData = async () => {
@@ -93,6 +111,10 @@ const App = (): JSX.Element => {
         }
     }, [position]);
 
+    const handleSubmit = useCallback((formValues: {place: string, date: string}) => {
+        getWeatherDataByPlace(formValues.place, formValues.date);
+    }, []);
+
 
     return (
         <div className="App">
@@ -104,9 +126,11 @@ const App = (): JSX.Element => {
                     </Col>
                 </Row>
             }
-
             <Row className="main" justify="space-around">
                 <Col lg={12} xs={23}>
+                    <h1>
+                        Right now in {location?.name}, it's {weather?.condition?.text}
+                    </h1>
                     <CurrentSummary weather={weather} location={location}/>
                 </Col>
             </Row>
@@ -119,6 +143,23 @@ const App = (): JSX.Element => {
                     })
                 }
             </Row>
+            <Row className="main" justify="center">
+                <Col lg={12} xs={23}>
+                    <SearchForm onSubmit={handleSubmit}/>
+                </Col>
+            </Row>
+            {
+                searchedWeather && searchedLocation &&
+                <Row className="main" justify="space-around">
+                    <Col lg={12} xs={23}>
+                        <h1>
+                            In {searchedLocation.name} {searchedWeather.condition?.text !== '' && <span>it's {searchedWeather.condition?.text}</span>} on {new Date(searchedDate).toLocaleDateString()}
+                        </h1>
+                        <CurrentSummary weather={searchedWeather} location={searchedLocation}/>
+                    </Col>
+                </Row>
+            }
+
         </div>
     );
 }

@@ -101,6 +101,22 @@
     background-size: cover;
   }
 
+
+
+
+}
+
+@media (max-width: 1024px) {
+  .App {
+    background: url('../images/weather-live-wallpaper-1024x768.jpeg');
+    background-repeat: repeat-y;
+    background-size: cover;
+  }
+
+  .ant-form {
+    padding-bottom: 30px;
+  }
+
   .forecasts {
     margin: 10px 5px;
   }

@@ -6,9 +6,9 @@ interface ForecastItemProps {
     forecast: any;
 }
 
-const ForecastItem = ({forecast}: ForecastItemProps) => {
+const ForecastItem = ({forecast}: ForecastItemProps): JSX.Element => {
     return (
-        <Col lg={3} xs={12} className="forecasts">
+        <Col lg={3} md={6} xs={12} className="forecasts">
 
             <Card bordered={false}>
                 <div className="temperature">
